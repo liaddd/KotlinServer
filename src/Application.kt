@@ -13,7 +13,7 @@ fun Application.module(testing: Boolean = false) {
     println("wow")
     routing {
         get("/") {
-            call.respondText { "Itzik ya zain" }
+            call.respondText { "Itzik its working!" }
         }
     }
 }
