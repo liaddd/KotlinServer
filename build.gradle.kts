@@ -6,7 +6,7 @@ val kotlin_version: String by project
 val logback_version: String by project
 
 tasks.create("stage"){
-    dependsOn("installDis")
+    dependsOn("installDist")
 }
 
 plugins {

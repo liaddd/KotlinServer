@@ -1,6 +1,5 @@
 {
   "name" : "KotlinServer",
   "description" : "test",
-  "image" : "heroku/java",
-  "addons" : [ "heroku-postgresql" ]
+  "image" : "heroku/java"
 }
