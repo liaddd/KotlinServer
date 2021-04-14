@@ -12,6 +12,7 @@ tasks.create("stage"){
 plugins {
     application
     kotlin("jvm") version "1.4.21"
+    kotlin("plugin.serialization") version "1.4.31"
 }
 
 group = "com.example"
@@ -30,6 +31,8 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version")
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
+    implementation("io.ktor:ktor-serialization:$ktor_version")
+
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }
 
