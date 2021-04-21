@@ -1,6 +1,6 @@
 package com.example
 
-import com.example.models.Gender
+import com.example.database.UserDao
 import com.example.routing.login
 import com.example.routing.root
 import com.example.routing.user
@@ -9,8 +9,7 @@ import io.ktor.features.*
 import io.ktor.routing.*
 import io.ktor.serialization.*
 import kotlinx.serialization.json.Json
-import java.lang.Exception
-import java.text.ParseException
+import org.jetbrains.exposed.sql.Database
 
 fun main(args: Array<String>): Unit = io.ktor.server.netty.EngineMain.main(args)
 
@@ -22,13 +21,17 @@ fun Application.module(testing: Boolean = false) {
         json(Json{
             prettyPrint = true
             isLenient = true
+            ignoreUnknownKeys = true
         })
     }
+
+    val dao = UserDao(Database.connect("jdbc:h2:mem:test;DB_CLOSE_DELAY=-1;", driver = "org.h2.Driver"))
+    dao.init()
 
     routing {
         root()
         login()
-        user()
+        user(dao)
     }
 }
 

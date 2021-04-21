@@ -32,6 +32,9 @@ dependencies {
     implementation("io.ktor:ktor-server-netty:$ktor_version")
     implementation("ch.qos.logback:logback-classic:$logback_version")
     implementation("io.ktor:ktor-serialization:$ktor_version")
+    implementation("io.ktor:ktor-html-builder:$ktor_version")
+    implementation("org.jetbrains.exposed:exposed:0.12.1")
+    implementation("com.h2database:h2:1.4.191")
 
     testImplementation("io.ktor:ktor-server-tests:$ktor_version")
 }

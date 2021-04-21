@@ -1,5 +1,6 @@
 package com.example.routing
 
+import com.example.database.UserDao
 import com.example.extensions.replace
 import com.example.models.User
 import io.ktor.application.*
@@ -8,15 +9,16 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-private var users = mutableListOf<User>()
 
-fun Routing.user(){
+fun Routing.user(dao : UserDao){
+    val users = mutableListOf<User>()
 
     route("/user") {
 
         // create user
         post{
             val user = call.receive<User>()
+            println("user posted is: $user")
             if(users.any { it.email == user.email }) return@post call.respond(HttpStatusCode.BadRequest, "User with email: ${user.email} already exist!")
             users.add(user)
             println("user ${user.firstName} created successfully!")
@@ -32,6 +34,7 @@ fun Routing.user(){
 
         // get all users
         get{
+            println("users: $users")
             call.respond(users)
         }
 
