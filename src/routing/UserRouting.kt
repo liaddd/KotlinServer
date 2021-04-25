@@ -46,5 +46,13 @@ fun Routing.user(dao : UserDao){
             println("user ${user.firstName} updated successfully!")
             call.respond(user)
         }
+
+        post("login"){
+            val userEmail = call.parameters["email"]
+            val userPassword = call.parameters["password"]
+            val user = users.find { it.email == userEmail && it.password == userPassword }
+            if (user != null) call.respond(user)
+            else call.respond(HttpStatusCode.NotFound, "User not found")
+        }
     }
 }
