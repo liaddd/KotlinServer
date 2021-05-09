@@ -39,7 +39,7 @@ class UserDao(private val db: Database) : DAOInterface {
     }
 
     override fun updateUser(user: User) = transaction(db) {
-        Users.update({ Users.id eq user.id }) {
+        Users.update({ Users.id eq user.id!! }) {
             it[firstName] = user.firstName.orEmpty()
             it[lastName] = user.lastName.orEmpty()
             it[email] = user.email.orEmpty()
@@ -58,33 +58,33 @@ class UserDao(private val db: Database) : DAOInterface {
 
     override fun getUserById(id: Long): User? = transaction(db) {
         Users.select { Users.id eq id }.map {
-            User(
-                it[Users.firstName],
-                it[Users.lastName],
-                it[Users.email],
-                it[Users.phone],
-                it[Users.birthDay],
-                it[Users.gender],
-                it[Users.password],
-                it[Users.id]
-            )
+            toUser(it)
         }.singleOrNull()
     }
 
     override fun getAllUsers(): List<User> = transaction(db) {
         Users.selectAll().map {
-            User(
-                it[Users.firstName],
-                it[Users.lastName],
-                it[Users.email],
-                it[Users.phone],
-                it[Users.birthDay],
-                it[Users.gender],
-                it[Users.password],
-                it[Users.id]
-            )
+            toUser(it)
         }
     }
 
     override fun close() {}
+
+    override fun getUserByEmailAndPassword(email: String, password: String) = transaction(db){
+        Users.select { Users.email eq email and(Users.password eq password)}.map {
+            toUser(it)
+        }.singleOrNull()
+    }
+
+    private fun toUser(row : ResultRow) : User =
+        User(
+            row[Users.firstName],
+            row[Users.lastName],
+            row[Users.email],
+            row[Users.phone],
+            row[Users.birthDay],
+            row[Users.gender],
+            row[Users.password],
+            row[Users.id]
+        )
 }
