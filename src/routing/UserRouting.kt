@@ -36,6 +36,7 @@ fun Routing.user(dao : UserDao){
 
         // get user by id
         get("{id}") {
+            if(call.request.headers["Auth"].isNullOrBlank()) return@get call.respond(HttpStatusCode.Unauthorized, "Unauthorized call!")
             val id = call.parameters["id"]?.toLong() ?: return@get call.respond(HttpStatusCode.BadRequest, "Missing or malformed id")
             val user = dao.getUserById(id) ?: return@get call.respond(HttpStatusCode.NotFound , "could\'nt find user with id: $id")
             call.respond(user)
