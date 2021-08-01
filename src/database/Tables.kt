@@ -9,7 +9,7 @@ class Tables {
         val firstName = varchar("firstName", 100)
         val lastName = varchar("lastName", 100)
         val email = varchar("email", 100)
-        val phone = varchar("phone", 10)
+        val phone = varchar("phone", 13)
         val birthDay = varchar("birthDay", 100)
         val gender = enumeration("gender", Gender::class)
         val password = varchar("password", 10)
