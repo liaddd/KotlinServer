@@ -30,7 +30,8 @@ fun Routing.user(dao : UserDao){
             //users.add(user)
             //dao.createUser(user)
             println("user ${user.firstName} created successfully!")
-            dao.createUser(user)
+            val x = dao.createUser(user)
+            println(x)
             call.respond(user)
         }
 
